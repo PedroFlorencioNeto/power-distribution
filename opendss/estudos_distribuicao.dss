@@ -1,0 +1,49 @@
+Clear
+
+New Circuit.Example_6_1
+
+~ basekv = 12.47 pu = 1.000001 phases = 3 bus1 = bus_1
+~ Angle = 0
+~ MVAsc3 = 2000000 MVASC1 = 2100000
+
+/* New Linecode.336_4_ACRS nphases=3 BaseFreq=60 units=mi
+~ rmatrix = (0.4576 | 0.156 0.4666 | 0.1535 0.1580 0.4615)
+~ xmatrix = (1.0780 | 0.5017 1.0482 | 0.3849 0.4236 1.0651)
+~ units = mi Rg = 0.0 Xg = 0.0
+*/
+
+New Linecode.336_4_ACRS nphases=4 BaseFreq=60 units=mi
+~ rmatrix = (0.4013 | 0.0953 0.4013 | 0.0953 0.0952 0.4013 | 0.0953 0.0953 0.0953 0.6873)
+~ xmatrix = (1.38305 | 0.851531 1.38305 | 0.726597 0.780209 1.3805 | 0.7524447 0.786518 0.767425 1.54707) 
+~ neutral=0 wye=n
+
+New Wiredata.CondutorFase GMR=0.0244 DIAM=0.721 RAC=0.306
+~ normamps=530
+~ Runits=mi RADunits=in GMRunits=ft
+
+New Wiredata.CondutorNeutro GMR=0.00814 DIAM=0.563 RAC=0.592
+~ normamps=340
+~ Runits=mi RADunits=in GMRunits=ft
+
+New line
+
+// New Line.line1 Phases = 3 Bus1 = bus_1.1.2.3.0 Bus2 = 2.1.2.3.0
+// ~ Linecode = 336_4_ACRS Length = 10000 units = ft EarthModel = Carson
+
+New Line.line1 Phases = 3 Bus1 = bus_1.1.2.3.0 Bus2 = 2.1.2.3.0
+~ Geometry = Pole Length = 10000 units = ft EarthModel = Carson
+
+New Load.load1 Bus1=bus_2.1.2.3.0 Phases=3
+~ Conn = Wye Model = 1 kv = 12.47 kva = 6000 pf = 0.9
+
+Set EarthModel = Carson
+Set Voltagebases = [12.47]
+calcv
+Solve
+
+Show Voltages LN Nodes
+Show Currents Elem
+
+Export Voltages
+Export Currents
+
